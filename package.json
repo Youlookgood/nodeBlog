@@ -1,0 +1,11 @@
+{
+  "name": "blogfront",
+  "version": "1.0.0",
+  "description": "node.js blog front",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "linzhiying",
+  "license": "ISC"
+}
