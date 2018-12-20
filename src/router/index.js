@@ -7,6 +7,10 @@ import bodyConten from '@/pages/home/bodyContent/index'
 import bodyDetail from '@/pages/home/bodyDetails/index'
 import login from '@/pages/admin/login'
 
+import panel from '@/modules/panel/index'
+import comment from '@/modules/comment/index'
+import attachment from '@/modules/attachment/index'
+import allarticle from '@/modules/article/all.vue'
 
 Vue.use(Router)
 
@@ -36,8 +40,29 @@ export default new Router({
     },
     {
       path:'/admin',
-      name:'admin',
-      component: admin
+      component: admin,
+      children:[
+        {
+          path:'/',
+          name:'panel',
+          component:panel         
+        },
+        {
+          path:'comments',
+          name:'comment',
+          component:comment
+        },
+        {
+          path:'attachment',
+          name: 'attachment',
+          component: attachment
+        },
+        {
+          path: 'allarticle',
+          name:'allarticle',
+          component: allarticle
+        }
+      ]
     }    
   ]
 })

@@ -8,6 +8,8 @@ const state={
       1:'读书'
   },
   naVal:0,
+  navText:'仪表盘',
+  showDetail:false,
 }
 
 var getters = {
@@ -19,6 +21,12 @@ var getters = {
 let mutations = {
     changeNav(state, val){
         state.naVal = val
+    },
+    changeNavText(state, val){
+        state.navText = val
+    },
+    showHide(state){
+        state.showDetail = !state.showDetail
     }
 }
 

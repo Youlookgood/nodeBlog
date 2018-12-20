@@ -14,12 +14,12 @@
                     <p class="splice">MENUS</p>
                     <div class="nav">
                         <ul class="outlayer">
-                            <li :class="['li', actLi == index ? 'liact' : '']" v-for="(item, index) in asideList" :key="index" @click="showList(item, index)">
-                                <span class="span">{{item.name}}</span>
-                                <div  v-show="shwoChilder" class="navChildre">
+                            <li :class="['li', actLi == index ? 'liact' : '']" v-for="(item, index) in asideList" :key="index" >
+                                <label class="span" @click="showList(item, index)"><router-link :to="'/admin/'+item.path">{{item.name}}</router-link></label>
+                                <div  v-if="shwoChilder" class="navChildre">
                                     <ul>
                                         <li v-for="(child,index) in item.children" :class="actRoute == index ? 'liRoute' : ''" :key="index" @click="routeGo(item, index)">
-                                            <span>{{child.name}}</span>
+                                            <router-link :to="child.path">{{child.name}}</router-link>
                                         </li>
                                     </ul>
                                 </div>
@@ -28,43 +28,81 @@
                     </div>
                 </div>
             </el-aside>
-            <el-main>main</el-main>
+            <el-main class="main">
+                <ul class="head f-cb">
+                    <li class="photo f-fr">
+                         <a href="javascript:;">
+                             <img src="http://wss12138.cn:8090/upload/2018/11/WechatIMG13420181205163145295.jpeg" alt="头像">
+                            <span>林志颖</span>
+                         </a>
+                    </li>
+                </ul>
+                <section class="routeConten">
+                    <el-main>
+                        <div class="nav f-cb">
+                            <div class="f-fl">
+                                <span>
+                                    {{navText}}
+                                </span>
+                                <el-button size="mini" type="primary" v-show="navText == '仪表盘'">
+                                    按钮选项
+                                </el-button>
+                            </div>
+                            <div class="f-fr">
+                                <span><router-link to="/admin">首页&nbsp;</router-link></span>
+                                <span>&gt;&nbsp;{{navText}}</span>
+                            </div>
+                        </div>
+                        <router-view></router-view>
+                    </el-main>
+                </section>
+            </el-main>
         </el-container>
+        <alert-detail v-if="showDetail"/>
     </section>
 </template>
 
 <script>
+    import {mapActions, mapState, mapMutations} from 'vuex'
+    import alertDetail from '../../components/alertDetail.vue'
     export default{
         name: 'admin',
         data(){
             return {
                 asideList:[
                     {name:'仪表盘', path:''},
-                    {name:'文章', path:'', children:[{name:'所有文章', path:''}, {name:'写文章', path:''}, {name:'分类标签', path:''}]},
-                    {name:'评论', path:''},
-                    {name:'附件', path:''},
+                    {name:'文章', path:'', children:[{name:'所有文章', path:'allarticle'}, {name:'写文章', path:''}, {name:'分类标签', path:''}]},
+                    {name:'评论', path:'comments'},
+                    {name:'附件', path:'attachment'},
                 ],
                 showNav:false,
                 shwoChilder:false,
-                actLi:-1,
+                actLi:0,
                 actRoute:-1,
             }
         },
+        computed:{
+            ...mapState(['navText', 'showDetail'])
+        },
         methods:{
+            ...mapMutations(['changeNavText']),
             showList(item, index){
                 this.actLi = index;
                 if(item.children){
                     this.shwoChilder = !this.shwoChilder
                 }
+                this.changeNavText(item.name)
             },
             routeGo(item, index){
-                this.actRoute = index; 
-                console.log(1111111)
+                this.actRoute = index;
             }
         },
         mounted(){
 
             
+        },
+        components:{
+           alertDetail 
         }
     }
 </script>
@@ -89,7 +127,7 @@
             }
             .asideConter{
                 padding-top: 20px;
-                min-height: 960px;
+                min-height: 980px;
                 background-color: #222d32;
                 color: #fff;
                 .information{
@@ -140,11 +178,12 @@
                     .outlayer{
                         .li{
                             cursor: pointer;
-                            padding: 20px 0;
-                            text-indent: 20px;
+                            height: 54px;
+                            line-height: 54px;
                             font-size: 14px;
                             position: relative;
                             border-left-color: #3c8dbc;
+                            overflow: hidden;
                             .light{
                                 width: 6px;
                                 height: 100%;
@@ -157,7 +196,16 @@
                                 background-color: #1e282c;
                             }
                             .span{
+                                display: inline-block;
                                 color: #fff;
+                                width:100%;
+                                text-indent: 20px;
+                                a{
+                                    color: #fff;
+                                    display: inline-block;
+                                    width: 100%;
+                                    height: 100%;
+                                }
                                 
                             }
                             .navChildre{
@@ -165,10 +213,15 @@
                                 li{
                                     height: 40px;
                                     line-height: 40px;
-                                    text-indent: 40px;
-                                    
                                     &:hover{
                                         background-color: #367fa9;
+                                    }
+                                    a{
+                                        display: inline-block;
+                                        width: 100%;
+                                        height: 100%;
+                                        color: #fff;
+                                        text-indent: 40px;
                                     }
                                 }
                                 .liRoute{
@@ -178,11 +231,70 @@
                         }
                         li:nth-of-type(2){
                             border: 0;
+                            height: auto;
                         }
                         .liact{
                             border-left: 4px solid;
                             border-left-color: #3c8dbc;
                             background-color: #1e282c;
+                        }
+                    }
+                }
+            }
+        }
+        .main{
+            padding: 0;
+            .head{
+                height: 50px;
+                line-height: 50px;
+                background-color: #3c8dbc;
+                overflow: hidden;
+                .photo{
+                    margin-right: 20px;
+                    height: 50px;
+                    line-height: 50px;
+                    a{
+                        display: inline-block;
+                        height: 100%;
+                        width: 120px;
+                        text-align: center;
+                        img{
+                            max-width: 36px;
+                            border-radius: 50%;
+                            margin-top: 6px;
+                        }
+                        span{
+                            color: #fff;
+                            font-size: 12px;
+                            margin-bottom: 6px;
+                            position: relative;
+                            top: -10px;
+                        }
+                        &:hover{
+                            background-color: #23527c;
+                        }
+                    }
+                }
+            }
+            .routeConten{
+                min-height: 1000px;
+                background-color: #ecf0f5;
+                .nav{
+                    margin-bottom: 20px;
+                    height: 30px;
+                    line-height: 30px;
+                    div:nth-of-type(1){
+                        span{
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+                    }
+                    div:nth-of-type(2){
+                        span{
+                            font-size: 14px;
+                        }
+                        span:nth-of-type(2){
+                            color:#777;
                         }
                     }
                 }
