@@ -71,7 +71,7 @@
             return {
                 asideList:[
                     {name:'仪表盘', path:''},
-                    {name:'文章', path:'', children:[{name:'所有文章', path:'allarticle'}, {name:'写文章', path:''}, {name:'分类标签', path:''}]},
+                    {name:'文章', path:'', children:[{name:'所有文章', path:'allarticle'}, {name:'写文章', path:'write'}, {name:'分类标签', path:'category'}]},
                     {name:'评论', path:'comments'},
                     {name:'附件', path:'attachment'},
                 ],

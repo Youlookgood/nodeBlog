@@ -1,7 +1,7 @@
 <template>
     <section class="g-operation">
         <ul class="f-cb">
-            <li :class="['f-fl','list', ]" v-for="(item, index) in opera" :key="index" @click="choice(item, index)">
+            <li :class="['f-fl','list', ]" v-for="(item, index) in data" :key="index" @click="choice(item, index)">
                 <span :class=" now == index ? 'active' : '' ">
                     {{item.name}}({{item.number}})
                 </span>
@@ -14,6 +14,12 @@
     
     export default{
         name:'operation',
+        props:{
+            data:{
+                type: Array,
+            },
+
+        },
         data(){
             return {
                 opera:[

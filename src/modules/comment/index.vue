@@ -1,6 +1,6 @@
 <template>
     <section class="g-comment">
-        <operation />
+        <operation :data="operation"/>
         <div>
             <el-table :data="commentData">
                 <el-table-column label="评论者" prop="commenter">
@@ -26,11 +26,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <div class="tabBottom f-cb">
-                <div>
-                    <button-group/>
-                </div>
-            </div>
+            <button-group/>
         </div>
     </section>
 </template>
@@ -45,7 +41,12 @@
             return {
                 commentData:[
                     {commenter: 'line', content:'welcome', page:'来啊', date:'2018-12-17', operate:''}
-                ]
+                ],
+                operation:[
+                    {name:'已发布', number:1 },
+                    {name:'待审核', number:0 },
+                    {name:'回收站', number:0 },
+                ],
             }
         },
         components:{

@@ -25,5 +25,10 @@
 </script>
 
 <style scoped lang="scss">
-
+    .g-button{
+        background-color: #fff;
+        height: 53px;
+        line-height: 53px;
+        padding: 0 10px;
+    }
 </style>

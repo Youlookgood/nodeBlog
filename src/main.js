@@ -7,6 +7,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './pages/store/home'
 
+
+
+import jquery from 'jquery'
+
 import './assets/css/reset.css'
 import 'animate.css'
 

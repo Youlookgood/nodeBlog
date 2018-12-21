@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import APP from './../App'
 import home from '@/pages/home/index'
 import admin from '@/pages/admin/index'
 import bodyConten from '@/pages/home/bodyContent/index'
@@ -11,6 +10,8 @@ import panel from '@/modules/panel/index'
 import comment from '@/modules/comment/index'
 import attachment from '@/modules/attachment/index'
 import allarticle from '@/modules/article/all.vue'
+import category from '@/modules/article/classify.vue'
+import write from '@/modules/article/write.vue'
 
 Vue.use(Router)
 
@@ -61,6 +62,16 @@ export default new Router({
           path: 'allarticle',
           name:'allarticle',
           component: allarticle
+        },
+        {
+          path: 'category',
+          name: 'category',
+          component: category
+        },
+        {
+          path: 'write',
+          name: 'write',
+          component: write
         }
       ]
     }    
