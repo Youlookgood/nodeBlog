@@ -10,7 +10,7 @@
                 </ul>
             </el-col>
             <el-col :span="4" :offset="2" class="login">
-                <i class="el-icon-service"></i><a href="javascript:;">登录</a>
+                <i class="el-icon-service"></i><router-link to="/login">登录</router-link>
             </el-col>
         </el-row>
     </section>

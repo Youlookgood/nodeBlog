@@ -4,13 +4,12 @@
         <p class="title f-cb">
             <span>{{title}}</span>
             <label class="f-fr">
-                <a href="javascript:;" @click="isShow = !isShow" v-show="isShow">-</a>
+                <a href="javascript:;" @click="isShow = !isShow" v-show="isShow">一</a>
                 <a href="javascript:;" @click="isShow = !isShow" v-show="!isShow">+</a>
             </label>
         </p>
         <div class="slot" v-show="isShow">
-            asdasdf
-            <slot></slot>
+            <slot name="content"></slot>
         </div>
     </section>
 
@@ -42,18 +41,21 @@
     .g-unit{
         background-color: #fff;
         border-radius: 2px;
-        p{
-            font-size: 14px;
-            padding: 14px;
+        margin-bottom: 18px;
+        .title{
+            font-size: 18px;
+            padding: 12px;
             box-sizing: border-box;
             border-bottom: 1px solid #f4f4f4;
             a{
-                
+               font-size: 18px; 
             }
         }
         .slot{
-            padding: 6px;
             box-sizing: border-box;
+            .content{
+                padding: 6px;
+            }
         }
     }
 </style>

@@ -3,13 +3,15 @@
         <div class="f-cb">
             <article class="f-fl artZone">
             <!-- <h4>{{contentTitle}}</h4> -->
-                <h4 class="typeTitle">这是详情</h4>
+                <h4 class="typeTitle">{{detailData.title}}</h4>
                 <template>
-                    <div class="titleImg">
-                        <img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001525354340372c2bfb3745fd74066be9039bb6dd614b3000/l" alt="导图">
-                    </div>
-                    <div>
-                        <p><span>林志颖</span>/<span>编程</span>/<span>18-12-12</span>/<span>阅读量：100</span></p>
+                    <!-- <div class="titleImg">
+                        <img src="../../../assets/aisi.jpg" alt="导图" style="width:200px;height:200px;">
+                    </div> -->
+                    <section class="textContent" ref="textContent">
+                    </section>
+                    <div class="bottom">
+                        <p><span>{{detailData.author}}</span>/<span>暂无类型</span>/<span>{{detailData.upTime | timeChange}}</span>/<span>暂无阅读量</span></p>
                     </div>    
                 </template>
             </article>
@@ -32,10 +34,28 @@
         },
         data(){
             return {
+                detailData:{title:'', author:'', upTime:''},
             }
         },
+        methods:{
+            init(){
+                this.$http({
+                    url:'/apis/article/getArticle',
+                    method:'get',
+                    params:{
+                        serial:Number(this.$route.params.id),
+                        page:'detail'
+                    }
+                }).then(async (res) => {
+                    this.detailData = res.data.data;
+                    this.$refs.textContent.innerHTML = this.detailData.content;
+                })
+            }
+        },
+        mounted(){
+            this.init()
+        },
         created(){
-            console.log(this.$route.params)
         }
     }
 </script>
@@ -49,7 +69,20 @@
             min-height: 1000px;
             .typeTitle{
                  margin-bottom: 20px;
+                 text-align: center;
+            }
+            .textContent{
+                box-sizing: content-box;
+                margin: 20px;
+                background: #f5f5f5;
+                min-height: 300px;
+                padding: 20px 10px;
+                box-shadow: -4px 7px 46px 2px rgba(0,0,0,0.1);
             }   
+            .bottom{
+              text-align: right;
+              margin-right: 20px;  
+            }
             .artShow{
                 li{
                     margin-bottom: 40px;

@@ -7,7 +7,7 @@
                     <div class="information">
                         <img src="http://wss12138.cn:8090/upload/2018/11/WechatIMG13420181205163145295.jpeg" alt="头像">
                         <div>
-                            <p><span>林志颖</span></p>
+                            <p><span>{{this.userInfor.username}}</span></p>
                             <p><span class="person"></span><a href="javascript:;">个人资料</a></p>
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                                 <div  v-if="shwoChilder" class="navChildre">
                                     <ul>
                                         <li v-for="(child,index) in item.children" :class="actRoute == index ? 'liRoute' : ''" :key="index" @click="routeGo(item, index)">
-                                            <router-link :to="child.path">{{child.name}}</router-link>
+                                            <router-link :to="'/admin/'+child.path">{{child.name}}</router-link>
                                         </li>
                                     </ul>
                                 </div>
@@ -33,7 +33,7 @@
                     <li class="photo f-fr">
                          <a href="javascript:;">
                              <img src="http://wss12138.cn:8090/upload/2018/11/WechatIMG13420181205163145295.jpeg" alt="头像">
-                            <span>林志颖</span>
+                            <span>{{this.userInfor.username}}</span>
                          </a>
                     </li>
                 </ul>
@@ -82,7 +82,7 @@
             }
         },
         computed:{
-            ...mapState(['navText', 'showDetail'])
+            ...mapState(['navText', 'showDetail','userInfor'])
         },
         methods:{
             ...mapMutations(['changeNavText']),
@@ -95,10 +95,32 @@
             },
             routeGo(item, index){
                 this.actRoute = index;
+            },
+            init(){
+                this.getArticle()
+                
+            },
+            getArticle(){
+                const api = '/apis'
+                this.$http(`${api}/article/getArticle`, {
+                    params:{
+                        userId: 'linzhiying'
+                    },
+                    methods:'get'
+                })
             }
         },
         mounted(){
-
+            const userId = localStorage.getItem('userId');
+            if(!userId){
+                this.$message('您还未登录，请先登录')
+                setTimeout(()=>{
+                    this.$router.push('/login')
+                },2000)
+            }
+            this.init()
+        },
+        created(){
             
         },
         components:{

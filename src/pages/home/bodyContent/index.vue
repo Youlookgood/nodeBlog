@@ -6,15 +6,15 @@
                 <h4 class="typeTitle">{{navTitle}}</h4>
                 <template>
                     <ul class="artShow">
-                        <li v-for="(item, index) in articleList" :key="index" class="f-cb">
+                        <li v-for="(item, index) in articleList" :key="item.serial" class="f-cb">
                             <div class="f-fl artImg">
-                                <img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001525354340372c2bfb3745fd74066be9039bb6dd614b3000/s" alt="文章图片">
+                                <img src="../../../assets/aisi.jpg" alt="文章图片">
                             </div>
                             <div class="articleInfor f-fl">
-                                <h6>{{item.artTitle}}</h6>
-                                <p><span>{{item.author}}</span>/<span>{{navTitle}}</span>/{{item.time}}/{{item.views}}</p>
-                                <p>{{item.abstract}}</p>
-                                <p><router-link :to="'article/' + item.uid" ><el-button type="primary">阅读&nbsp;&gt;&gt;</el-button></router-link></p>
+                                <h6>{{item.title}}</h6>
+                                <p><span>{{item.author}}</span>/<span>标签暂无</span>/{{item.upTime | timeChange}}/观看次数暂无</p>
+                                <p>这里会是文章简介</p>
+                                <p><router-link :to="'article/' + item.serial" ><el-button type="primary">阅读&nbsp;&gt;&gt;</el-button></router-link></p>
                             </div>
                         </li>
                     </ul>
@@ -49,9 +49,6 @@
         data(){
             return {
                 articleList: [
-                    {artTitle: 'JDK11新特性解读', author: '林志颖', artType:'编程', time: '2018-12-12', views: 100, abstract:'这是尝试这是尝试这是尝试这是尝试', uid:123 },
-                    {artTitle: 'JDK11新特性解读', author: '林志颖', artType:'编程', time: '2018-12-12', views: 100, abstract:'这是尝试这是尝试这是尝试这是尝试', uid:456 },
-
                 ]
             }
         },
@@ -69,6 +66,21 @@
             }
         },
         methods:{
+            init(){
+                this.$http({
+                    url:'/apis/article/getArticle',
+                    method:'get',
+                    params:{
+                        userName:'linzhiying',
+                        page:'home'
+                    }
+                }).then((res)=>{
+                    this.articleList = res.data.data;
+                })
+            }
+        },
+        created(){
+            this.init()
         }
     }
 </script>

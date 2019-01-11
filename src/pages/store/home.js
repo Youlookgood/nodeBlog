@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+import admin from './admin'
+
 const state={
   navHead:{
       0:'编程',
@@ -10,6 +12,7 @@ const state={
   naVal:0,
   navText:'仪表盘',
   showDetail:false,
+  userInfor:'null',
 }
 
 var getters = {
@@ -27,12 +30,18 @@ let mutations = {
     },
     showHide(state){
         state.showDetail = !state.showDetail
+    },
+    getUserInfor(state, val){
+        this.state.userInfor = val
     }
 }
 
 const store = new Vuex.Store({
     state,
-    mutations
+    mutations,
+    modules:{
+        admin:admin        
+    }
 })
  
 export default store

@@ -20,7 +20,7 @@
 
                 </el-table-column>
                 <el-table-column label="操作">
-                    <template slot-scope="scope">
+                    <template>
                         <el-button type="primary" size="mini">回复</el-button>
                         <el-button type="danger" size="mini">丢弃</el-button>
                     </template>

@@ -14,6 +14,8 @@
 </template>
 
 <script>
+    import {mapState, mapMutations} from 'vuex'
+
     export default{
         name: 'login',
         data(){
@@ -22,14 +24,33 @@
                 password:''
             }
         },
+        computed:{
+            ...mapState(['userInfor','navText'])
+        },
         methods:{
+            ...mapMutations(['getUserInfor']),
             login(){
-                if(this.userName && this.password){
-                    this.$message('成功')
-                    this.$router.push('/admin')
-                }else{
-                    this.$message('失败')
-                }
+                const api = '/apis'
+                this.$http({
+                    method:'post',
+                    url:`${api}/users/login`,
+                    data:{
+                        userName: this.userName,
+                        password: this.password
+                    },
+                }).then((res)=>{
+                    if(res.data.code == 0){
+                        this.$message('登录成功')
+                        this.getUserInfor(res.data.data)
+                        localStorage.setItem('userId',"linzhiying")
+                        setTimeout(()=>{
+                            this.$router.push('admin')                     
+                        }, 2000)    
+                        
+                    }else{
+                        this.$message('账号密码错误') 
+                    }
+                })
             }
         }
     }

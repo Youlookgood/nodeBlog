@@ -119,7 +119,7 @@
     .panel{
         .paneItem{
             width: 392px;
-            margin-right: 22px;
+            margin-right: 20px;
             margin-bottom: 20px;
             .nav{
                 position: relative;

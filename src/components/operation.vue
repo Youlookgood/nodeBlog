@@ -23,9 +23,9 @@
         data(){
             return {
                 opera:[
-                    {name:'已发布', number:1 },
-                    {name:'待审核', number:0 },
-                    {name:'回收站', number:0 },
+                    {name:'已发布', number:1, status:0 },
+                    {name:'待审核', number:0, status:1 },
+                    {name:'回收站', number:0, status:2 },
                 ],
                 now:0,
             }
@@ -33,6 +33,7 @@
         methods:{
             choice(it,id){
                 this.now = id;
+                this.$emit('output', it.status)
             }
         }
     }
